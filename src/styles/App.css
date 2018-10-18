@@ -1,0 +1,29 @@
+body {
+  background-color: #f1f8f9;
+}
+
+.Page {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  max-height: 100%;
+}
+
+.pageHeader {
+  background-color: pink;
+  margin: -0.5em;
+  margin-bottom: 0em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pageTitle {
+  color: white;
+  font-size: 30px;
+  margin-left: 20px;
+  /* margin-top: 10px; */
+  padding: 0;
+  font-weight: bold;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #666;
+}
