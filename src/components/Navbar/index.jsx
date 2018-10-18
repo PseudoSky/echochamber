@@ -2,15 +2,30 @@ import React from "react";
 import styles from "../../styles/Navbar.css";
 import appStyles from "../../styles/App.css";
 
-const Navbar = () => (
-  <div className={styles.nav}>
-    <div className={styles.pageHeader}>
-      <div className={styles.pageTitle}>GYFanbase</div>
-      <div className={styles.buttons}>
-        <button className={appStyles.button}>Login</button>
+const Navbar = props => {
+  var button;
+  if (props.state.alreadyHasCredentials === true) {
+    button = (
+      <button onClick={props.signUpButton} className={appStyles.button}>
+        Sign Up
+      </button>
+    );
+  } else {
+    button = (
+      <button onClick={props.loginButton} className={appStyles.button}>
+        Login
+      </button>
+    );
+  }
+  return (
+    <div className={styles.nav}>
+      <div className={styles.pageHeader}>
+        <div className={styles.pageTitle}>GYFanbase</div>
+        <div className={styles.buttons} />
+        {button}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Navbar;
