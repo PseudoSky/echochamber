@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "../../styles/Login.css";
 import appStyles from "../../styles/App.css";
+import axios from "axios";
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
 
@@ -26,6 +27,7 @@ class SignUpForm extends Component {
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.postSignUp = this.postSignUp.bind(this);
   }
 
   handleFirstNameChange(event) {
@@ -53,6 +55,32 @@ class SignUpForm extends Component {
     this.setState({ password: event.target.value }, () => {
       console.log(this.state);
     });
+  }
+
+  postSignUp() {
+    if (
+      this.state.firstName.length > 0 &&
+      this.state.lastName.length > 0 &&
+      this.state.email.length > 0 &&
+      this.state.password.length > 0
+    ) {
+      var body = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password
+      };
+
+      axios({ method: "post", url: "/api/user", data: body })
+        .then(data => {
+          console.log(data.data, "data");
+        })
+        .catch(err => {
+          console.log("there was an error getting data...", err);
+        });
+    } else {
+      window.alert("missing inputs");
+    }
   }
 
   handleSubmit(event) {
@@ -129,7 +157,11 @@ class SignUpForm extends Component {
               </div>
             </div>
             <div className={styles.buttonIndent}>
-              <button className={appStyles.button} type="submit">
+              <button
+                onClick={this.postSignUp}
+                className={appStyles.button}
+                type="submit"
+              >
                 Sign Up
               </button>
             </div>

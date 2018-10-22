@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styles from "../../styles/Login.css";
 import appStyles from "../../styles/App.css";
+import axios from "axios";
+// import LoaderWheel from "../../semantic-ui-react/LoaderWheel";
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
 
@@ -8,6 +10,7 @@ import appStyles from "../../styles/App.css";
 //   return {
 //     addUser: article => dispatch(addUser(article))
 //   };
+
 // };
 
 class LoginForm extends Component {
@@ -16,12 +19,13 @@ class LoginForm extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      userVerified: false
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.verifyUserData = this.verifyUserData.bind(this);
   }
 
   handleEmailChange(event) {
@@ -36,30 +40,30 @@ class LoginForm extends Component {
     });
   }
 
-  //   handleSubmit(event) {
-  //     event.preventDefault();
-  //     const { name, email, password } = this.state;
-  //     this.setState({
-  //       name: "",
-  //       email: "",
-  //       password: ""
-  //     });
-  //   }
-
-  //   <div className={styles.inputLine}>
-  //   <div className={styles.label}>Password</div>
-  //   <div className={styles.input}>
-  //     <input
-  //       className={styles.inputBox}
-  //       type="text"
-  //       id="form"
-  //       value={password}
-  //       onChange={() => {
-  //         this.handlePasswordChange(event);
-  //       }}
-  //     />
-  //   </div>
-  // </div>
+  verifyUserData() {
+    if (this.state.email.length > 0 && this.state.password.length > 0) {
+      var body = { email: this.state.email, password: this.state.password };
+      if (this.state.email.length > 0 && this.state.password.length > 0) {
+        axios({ method: "put", url: "/api/user", data: body })
+          .then(data => {
+            console.log(data);
+            if (data.data === false) {
+              window.alert("credentials do not exist");
+            } else {
+            //   this.setState({ userVerified: true }, () => {
+            //     console.log(this.state);
+            //   });
+            this.props.updateUserLoginStatus(true)
+            }
+          })
+          .catch(err => {
+            console.log("user not verified");
+          });
+      }
+    } else {
+      window.alert("missing inputs");
+    }
+  }
 
   render() {
     const { email, password } = this.state;
@@ -98,9 +102,16 @@ class LoginForm extends Component {
             </div>
 
             <div className={styles.buttonIndent}>
-              <button className={appStyles.button} type="submit">
+              <button
+                onClick={this.verifyUserData}
+                className={appStyles.button}
+                type="submit"
+              >
                 Login
               </button>
+            </div>
+            <div class="ui active centered inline loader">
+              {/* <LoaderWheel /> */}
             </div>
           </div>
         </div>
