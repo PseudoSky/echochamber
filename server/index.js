@@ -11,7 +11,7 @@ app.use(cors());
 app.use(body.urlencoded({ extended: true }));
 app.use(body.json());
 app.use(express.static(path.resolve(__dirname, "../dist")));
-// app.use("/api", router);
+app.use("/api", router);
 
 app.listen(PORT, () => {
   console.log(`successfully connected to port ${PORT}`);
