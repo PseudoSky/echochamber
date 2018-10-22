@@ -1,29 +1,27 @@
 body {
   background-color: #f1f8f9;
-}
-
-.Page {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  max-height: 100%;
 }
 
-.pageHeader {
-  background-color: pink;
-  margin: -0.5em;
-  margin-bottom: 0em;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.button {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: #f1f8f9;
+  color: grey;
+  border: 2px solid #e7e7e7;
+  -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white;
+  border-radius: 10px;
+  width: 100px;
+  
 }
 
-.pageTitle {
-  color: white;
-  font-size: 30px;
-  margin-left: 20px;
-  /* margin-top: 10px; */
-  padding: 0;
-  font-weight: bold;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #666;
+.button:hover {
+  background-color: #e7e7e7;
 }
