@@ -1,11 +1,14 @@
 .form {
   display: flex;
   flex-direction: column;
-
-  border: 1px solid black;
+  border: 5px solid white;
   margin-top: 20px;
-  width: 500px;
+  width: 300px;
   height: 150px;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 4px 4px #deeff5;
+  border-radius: 30px;
 }
 
 .centerForm {
@@ -13,4 +16,43 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+
+.centerContent {
+  padding-left: 34px;
+}
+
+/* .form_group {
+  display: flex;
+  flex-direction: column;
+} */
+
+.label {
+  width: 40px;
+  white-space: nowrap;
+  color: #111517;
+  -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white;
+}
+
+.inputLine {
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.inputBox {
+  width: 50%;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.input {
+  display: flex;
+  align-self: flex-end;
+  padding-left: 50px;
+}
+
+.buttonIndent {
+  padding-left: 60px;
+  padding-top: 10px;
 }

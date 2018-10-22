@@ -69,54 +69,71 @@ class SignUpForm extends Component {
     return (
       <div className={styles.centerForm}>
         <div id="SignUpForm" className={styles.form}>
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label>First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                value={firstName}
-                onChange={() => {
-                  this.handleFirstNameChange(event);
-                }}
-              />
-            </div>
-            <div>
-              <label>Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                value={lastName}
-                onChange={() => {
-                  this.handleLastNameChange(event);
-                }}
-              />
-              <div />
-              <label>Email</label>
-              <input
-                type="text"
-                id="form"
-                value={email}
-                onChange={() => {
-                  this.handleEmailChange(event);
-                }}
-              />
-              <div />
-              <label>Password</label>
-              <input
-                type="text"
-                id="form"
-                value={password}
-                onChange={() => {
-                  this.handlePasswordChange(event);
-                }}
-              />
+          <div className={styles.centerContent}>
+            <div className={styles.inputLine}>
+              <div className={styles.label}>First Name</div>
+              <div className={styles.input}>
+                <input
+                  className={styles.inputBox}
+                  type="text"
+                  id="firstName"
+                  value={firstName}
+                  onChange={() => {
+                    this.handleFirstNameChange(event);
+                  }}
+                />
+              </div>
             </div>
 
-            <button className={appStyles.button} type="submit">
-              Sign Up
-            </button>
-          </form>
+            <div className={styles.inputLine}>
+              <div className={styles.label}>Last Name</div>
+              <div className={styles.input}>
+                <input
+                  className={styles.inputBox}
+                  type="text"
+                  id="lastName"
+                  value={lastName}
+                  onChange={() => {
+                    this.handleLastNameChange(event);
+                  }}
+                />
+              </div>
+            </div>
+            <div className={styles.inputLine}>
+              <div className={styles.label}>Email</div>
+              <div className={styles.input}>
+                <input
+                  className={styles.inputBox}
+                  type="text"
+                  id="form"
+                  value={email}
+                  onChange={() => {
+                    this.handleEmailChange(event);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputLine}>
+              <div className={styles.label}>Password</div>
+              <div className={styles.input}>
+                <input
+                  className={styles.inputBox}
+                  type="text"
+                  id="form"
+                  value={password}
+                  onChange={() => {
+                    this.handlePasswordChange(event);
+                  }}
+                />
+              </div>
+            </div>
+            <div className={styles.buttonIndent}>
+              <button className={appStyles.button} type="submit">
+                Sign Up
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
