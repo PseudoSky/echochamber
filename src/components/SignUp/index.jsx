@@ -86,6 +86,7 @@ class SignUpForm extends Component {
           axios({ method: "post", url: "/api/user", data: body })
             .then(data => {
               console.log(data.data, "data");
+              this.props.userVerified();
             })
             .catch(err => {
               console.log("there was an error getting data...", err);
