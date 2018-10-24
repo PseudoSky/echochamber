@@ -11,12 +11,13 @@ module.exports = {
   user: {
     post: (req, res) => {
       var user = Users.build({
+        uuid: req.body.uuid,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
       });
-      console.log(req.body);
+      //   console.log(req.body);
 
       user
         .save()
@@ -25,7 +26,8 @@ module.exports = {
           res.status(200).send("user data successfully posted");
         })
         .catch(err => {
-          console.log("error saving data");
+          console.log(err);
+          res.sendStatus(401);
         });
     },
     put: (req, res) => {

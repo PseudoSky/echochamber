@@ -4,6 +4,7 @@ import appStyles from "../../styles/App.css";
 import axios from "axios";
 const crypto = require("crypto");
 import hashPassword from "../../helperFunctions/index";
+const uuidv1 = require("uuid/v1");
 
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
@@ -67,13 +68,17 @@ class SignUpForm extends Component {
     }
   }
 
+  //attempt to add new user info to database
   postSignUp() {
+    //sets requirements for inputs
     if (
       this.state.firstName.length > 0 &&
       this.state.lastName.length > 0 &&
-      this.state.email.length > 0 &&
-      this.state.password.length > 0
+      this.state.email.length > 4 &&
+      this.state.password.length > 6 &&
+      this.state.email.includes("@", ".")
     ) {
+      //hashes password and sends request upon successfull hashing
       crypto.pbkdf2(
         this.state.password,
         "salt",
@@ -84,6 +89,7 @@ class SignUpForm extends Component {
           if (err) throw err;
           var pw = derivedKey.toString("hex");
           var body = {
+            uuid: uuidv1(),
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
@@ -91,17 +97,32 @@ class SignUpForm extends Component {
           };
 
           axios({ method: "post", url: "/api/user", data: body })
+            //upon success, set loggedIn to true on App
             .then(data => {
               console.log(data.data, "data");
               this.props.userVerified();
             })
+            //upon error, 401 code means email is already registered
             .catch(err => {
-              console.log("there was an error getting data...", err);
+              console.log(err, "the error");
+              window.alert(
+                "There is already an account registered under the email you provided. Please login instead!"
+              );
             });
         }
       );
+      //if input requirements are not met
     } else {
-      window.alert("missing inputs");
+      //if email does not contain expected characters
+      if (this.state.email.includes("@", ".") === false) {
+        window.alert("email is entered incorrectly");
+        //if password is not long enough
+      } else if (this.state.password.length < 7) {
+        window.alert("password must be at least 6 characters");
+        //if inputs are blank
+      } else {
+        window.alert("missing inputs");
+      }
     }
   }
 
@@ -112,6 +133,7 @@ class SignUpForm extends Component {
         <div id="SignUpForm" className={styles.form}>
           <div className={styles.centerContent}>
             <div className={styles.inputLine}>
+              {/* first name label and input */}
               <div className={styles.label}>First Name</div>
               <div className={styles.input}>
                 <input
@@ -129,6 +151,7 @@ class SignUpForm extends Component {
               </div>
             </div>
             <div className={styles.inputLine}>
+              {/* last name label and input */}
               <div className={styles.label}>Last Name</div>
               <div className={styles.input}>
                 <input
@@ -146,6 +169,7 @@ class SignUpForm extends Component {
               </div>
             </div>
             <div className={styles.inputLine}>
+              {/* email label and input */}
               <div className={styles.label}>Email</div>
               <div className={styles.input}>
                 <input
@@ -163,6 +187,7 @@ class SignUpForm extends Component {
               </div>
             </div>
             <div className={styles.inputLine}>
+              {/* password label and input */}
               <div className={styles.label}>Password</div>
               <div className={styles.input}>
                 <input
