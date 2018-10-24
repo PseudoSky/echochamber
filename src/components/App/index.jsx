@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SignUpForm from "../SignUp/index.jsx";
 import LoginForm from "../Login/index.jsx";
 import Navbar from "../Navbar/index";
+import Dashboard from "../Dashboard/index";
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends Component {
     };
     this.loginButton = this.loginButton.bind(this);
     this.signUpButton = this.signUpButton.bind(this);
+    this.userVerified = this.userVerified.bind(this);
   }
 
   loginButton() {
@@ -30,12 +32,20 @@ class App extends Component {
     });
   }
 
+  userVerified() {
+    this.setState({ loggedIn: true }, () => {
+      console.log(this.state);
+    });
+  }
+
   render() {
-    var loginScreen;
-    if (this.state.alreadyHasCredentials === true) {
-      loginScreen = <LoginForm />;
+    var view;
+    if (this.state.alreadyHasCredentials === true && this.state.loggedIn === true) {
+      view = <Dashboard />;
+    } else if (this.state.alreadyHasCredentials === true) {
+      view = <LoginForm userVerified={this.userVerified} />;
     } else {
-      loginScreen = <SignUpForm  loginButton={this.loginButton}/>;
+      view = <SignUpForm loginButton={this.loginButton} />;
     }
     return (
       <div>
@@ -44,7 +54,7 @@ class App extends Component {
           signUpButton={this.signUpButton}
           state={this.state}
         />
-        {loginScreen}
+        {view}
       </div>
     );
   }

@@ -46,15 +46,15 @@ class LoginForm extends Component {
       if (this.state.email.length > 0 && this.state.password.length > 0) {
         axios({ method: "put", url: "/api/user", data: body })
           .then(data => {
-            console.log(data);
+            console.log(data.data);
             if (data.data === false) {
               window.alert("credentials do not exist");
             } else {
-              this.props.updateUserLoginStatus(true);
+              this.props.userVerified();
             }
           })
           .catch(err => {
-            console.log("user not verified");
+            console.log("user not verified", err);
           });
       }
     } else {
