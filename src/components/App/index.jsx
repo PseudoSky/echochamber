@@ -18,6 +18,7 @@ class App extends Component {
     this.loginButton = this.loginButton.bind(this);
     this.signUpButton = this.signUpButton.bind(this);
     this.userVerified = this.userVerified.bind(this);
+    this.logoutButton = this.logoutButton.bind(this);
   }
 
   loginButton() {
@@ -32,6 +33,12 @@ class App extends Component {
     });
   }
 
+  logoutButton() {
+    this.setState({ loggedIn: false }, () => {
+      console.log(this.state);
+    });
+  }
+
   userVerified() {
     this.setState({ loggedIn: true }, () => {
       console.log(this.state);
@@ -40,7 +47,10 @@ class App extends Component {
 
   render() {
     var view;
-    if (this.state.alreadyHasCredentials === true && this.state.loggedIn === true) {
+    if (
+      this.state.alreadyHasCredentials === true &&
+      this.state.loggedIn === true
+    ) {
       view = <Dashboard />;
     } else if (this.state.alreadyHasCredentials === true) {
       view = <LoginForm userVerified={this.userVerified} />;
@@ -52,6 +62,7 @@ class App extends Component {
         <Navbar
           loginButton={this.loginButton}
           signUpButton={this.signUpButton}
+          logoutButton={this.logoutButton}
           state={this.state}
         />
         {view}

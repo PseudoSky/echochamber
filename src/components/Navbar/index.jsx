@@ -4,7 +4,13 @@ import appStyles from "../../styles/App.css";
 
 const Navbar = props => {
   var button;
-  if (props.state.alreadyHasCredentials === true) {
+  if (props.state.loggedIn === true) {
+    button = (
+      <button onClick={props.logoutButton} className={appStyles.button}>
+        Logout
+      </button>
+    );
+  } else if (props.state.alreadyHasCredentials === true) {
     button = (
       <button onClick={props.signUpButton} className={appStyles.button}>
         Sign Up
