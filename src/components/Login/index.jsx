@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styles from "../../styles/Login.css";
 import appStyles from "../../styles/App.css";
 import axios from "axios";
+const crypto = require("crypto");
+import hashPassword from "../../helperFunctions/index";
 // import LoaderWheel from "../../semantic-ui-react/LoaderWheel";
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
@@ -42,21 +44,33 @@ class LoginForm extends Component {
 
   verifyUserData() {
     if (this.state.email.length > 0 && this.state.password.length > 0) {
-      var body = { email: this.state.email, password: this.state.password };
-      if (this.state.email.length > 0 && this.state.password.length > 0) {
-        axios({ method: "put", url: "/api/user", data: body })
-          .then(data => {
-            console.log(data.data);
-            if (data.data === false) {
-              window.alert("credentials do not exist");
-            } else {
-              this.props.userVerified();
-            }
-          })
-          .catch(err => {
-            console.log("user not verified", err);
-          });
-      }
+      crypto.pbkdf2(
+        this.state.password,
+        "salt",
+        100000,
+        64,
+        "sha512",
+        (err, derivedKey) => {
+          if (err) throw err;
+          var pw = derivedKey.toString("hex");
+          var body = {
+            email: this.state.email,
+            password: pw
+          };
+          axios({ method: "put", url: "/api/user", data: body })
+            .then(data => {
+              console.log(data.data);
+              if (data.data === false) {
+                window.alert("credentials do not exist");
+              } else {
+                this.props.userVerified();
+              }
+            })
+            .catch(err => {
+              console.log("user not verified", err);
+            });
+        }
+      );
     } else {
       window.alert("missing inputs");
     }

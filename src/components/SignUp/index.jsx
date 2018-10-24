@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styles from "../../styles/Login.css";
 import appStyles from "../../styles/App.css";
 import axios from "axios";
+const crypto = require("crypto");
+import hashPassword from "../../helperFunctions/index";
+
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
 
@@ -64,32 +67,34 @@ class SignUpForm extends Component {
       this.state.email.length > 0 &&
       this.state.password.length > 0
     ) {
-      var body = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        password: this.state.password
-      };
+      crypto.pbkdf2(
+        this.state.password,
+        "salt",
+        100000,
+        64,
+        "sha512",
+        (err, derivedKey) => {
+          if (err) throw err;
+          var pw = derivedKey.toString("hex");
+          var body = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: pw
+          };
 
-      axios({ method: "post", url: "/api/user", data: body })
-        .then(data => {
-          console.log(data.data, "data");
-        })
-        .catch(err => {
-          console.log("there was an error getting data...", err);
-        });
+          axios({ method: "post", url: "/api/user", data: body })
+            .then(data => {
+              console.log(data.data, "data");
+            })
+            .catch(err => {
+              console.log("there was an error getting data...", err);
+            });
+        }
+      );
     } else {
       window.alert("missing inputs");
     }
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.setState({
-      name: "",
-      email: "",
-      password: ""
-    });
   }
 
   render() {
