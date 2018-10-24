@@ -3,6 +3,12 @@ const connection = require("./index.js");
 
 // USERS;
 const Users = connection.define("users", {
+  uuid: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+    primaryKey: true
+  },
   firstName: {
     type: Sequelize.STRING,
     allowNull: false
@@ -13,7 +19,8 @@ const Users = connection.define("users", {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   password: {
     type: Sequelize.STRING,
