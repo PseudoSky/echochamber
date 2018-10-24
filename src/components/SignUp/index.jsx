@@ -31,6 +31,7 @@ class SignUpForm extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.postSignUp = this.postSignUp.bind(this);
+    this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
 
   handleFirstNameChange(event) {
@@ -58,6 +59,12 @@ class SignUpForm extends Component {
     this.setState({ password: event.target.value }, () => {
       console.log(this.state);
     });
+  }
+
+  handleSubmitOnEnter(event) {
+    if (event.key === "Enter") {
+      this.postSignUp();
+    }
   }
 
   postSignUp() {
@@ -112,6 +119,9 @@ class SignUpForm extends Component {
                   type="text"
                   id="firstName"
                   value={firstName}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handleFirstNameChange(event);
                   }}
@@ -126,6 +136,9 @@ class SignUpForm extends Component {
                   type="text"
                   id="lastName"
                   value={lastName}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handleLastNameChange(event);
                   }}
@@ -140,6 +153,9 @@ class SignUpForm extends Component {
                   type="text"
                   id="form"
                   value={email}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handleEmailChange(event);
                   }}
@@ -154,6 +170,9 @@ class SignUpForm extends Component {
                   type="text"
                   id="form"
                   value={password}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handlePasswordChange(event);
                   }}
