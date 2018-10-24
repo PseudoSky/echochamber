@@ -3,6 +3,7 @@ import SignUpForm from "../SignUp/index.jsx";
 import LoginForm from "../Login/index.jsx";
 import Navbar from "../Navbar/index";
 import Dashboard from "../Dashboard/index";
+import LinkSocialMedia from "../LinkSocialMedia/index"
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class App extends Component {
       email: "",
       password: "",
       loggedIn: false,
-      alreadyHasCredentials: false
+      alreadyHasCredentials: false,
+      linkedSocialMedia: false
     };
     this.loginButton = this.loginButton.bind(this);
     this.signUpButton = this.signUpButton.bind(this);
@@ -47,7 +49,9 @@ class App extends Component {
 
   render() {
     var view;
-    if (
+    if (this.state.loggedIn === true && this.state.linkedSocialMedia === false) {
+      view = <LinkSocialMedia/>
+    } else if (
       this.state.alreadyHasCredentials === true &&
       this.state.loggedIn === true
     ) {
