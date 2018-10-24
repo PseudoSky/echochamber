@@ -2,6 +2,8 @@ const Sequelize = require("sequelize");
 var sequelize = new Sequelize("gyfanbase", "katiemcculloch", "", {
   dialect: "postgres"
 });
+var pbkdf2 = require("pbkdf2");
+// var s = pbkdf2.generateSaltSync(32);
 
 const { Users } = require("../database/models.js");
 
@@ -15,6 +17,7 @@ module.exports = {
         password: req.body.password
       });
       console.log(req.body);
+
       user
         .save()
         .then(data => {
@@ -34,6 +37,7 @@ module.exports = {
           Users.increment("logins", { where: { email: req.body.email } });
           console.log("user is verified");
           if (data === 1) {
+            console.log("count is 1");
             res.status(200).send("true");
           } else {
             res.send("false");
