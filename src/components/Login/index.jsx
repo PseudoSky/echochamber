@@ -50,10 +50,7 @@ class LoginForm extends Component {
             if (data.data === false) {
               window.alert("credentials do not exist");
             } else {
-            //   this.setState({ userVerified: true }, () => {
-            //     console.log(this.state);
-            //   });
-            this.props.updateUserLoginStatus(true)
+              this.props.updateUserLoginStatus(true);
             }
           })
           .catch(err => {

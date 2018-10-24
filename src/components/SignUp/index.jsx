@@ -112,7 +112,6 @@ class SignUpForm extends Component {
                 />
               </div>
             </div>
-
             <div className={styles.inputLine}>
               <div className={styles.label}>Last Name</div>
               <div className={styles.input}>
@@ -141,7 +140,6 @@ class SignUpForm extends Component {
                 />
               </div>
             </div>
-
             <div className={styles.inputLine}>
               <div className={styles.label}>Password</div>
               <div className={styles.input}>
@@ -164,6 +162,12 @@ class SignUpForm extends Component {
               >
                 Sign Up
               </button>
+            </div>
+            <div
+              className={styles.alreadyMember}
+              onClick={this.props.loginButton}
+            >
+              <a href="#">Already a member? Login here...</a>
             </div>
           </div>
         </div>

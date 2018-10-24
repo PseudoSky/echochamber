@@ -35,7 +35,7 @@ class App extends Component {
     if (this.state.alreadyHasCredentials === true) {
       loginScreen = <LoginForm />;
     } else {
-      loginScreen = <SignUpForm />;
+      loginScreen = <SignUpForm  loginButton={this.loginButton}/>;
     }
     return (
       <div>
