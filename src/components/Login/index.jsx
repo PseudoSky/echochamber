@@ -28,6 +28,7 @@ class LoginForm extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.verifyUserData = this.verifyUserData.bind(this);
+    this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
 
   handleEmailChange(event) {
@@ -40,6 +41,11 @@ class LoginForm extends Component {
     this.setState({ password: event.target.value }, () => {
       console.log(this.state);
     });
+  }
+  handleSubmitOnEnter(event) {
+    if (event.key === "Enter") {
+      this.verifyUserData();
+    }
   }
 
   verifyUserData() {
@@ -90,6 +96,9 @@ class LoginForm extends Component {
                   type="text"
                   id="email"
                   value={email}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handleEmailChange(event);
                   }}
@@ -105,6 +114,9 @@ class LoginForm extends Component {
                   type="text"
                   id="password"
                   value={password}
+                  onKeyUp={() => {
+                    this.handleSubmitOnEnter(event);
+                  }}
                   onChange={() => {
                     this.handlePasswordChange(event);
                   }}
