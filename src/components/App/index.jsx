@@ -49,19 +49,23 @@ class App extends Component {
 
   render() {
     var view;
+    //if user is logged in but has not connected social meida yet
     if (
       this.state.loggedIn === true &&
       this.state.linkedSocialMedia === false
     ) {
       view = <LinkSocialMedia />;
+      //if user is logged in and has already connected their social media
     } else if (
       this.state.linkedSocialMedia === true &&
       this.state.loggedIn === true
     ) {
       view = <Dashboard />;
+      //if user has credentials already, but still needs to login
     } else if (this.state.alreadyHasCredentials === true) {
       view = <LoginForm userVerified={this.userVerified} />;
     } else {
+      //if user does not have credentials, going to site defaults to sign up view
       view = (
         <SignUpForm
           loginButton={this.loginButton}
