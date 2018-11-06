@@ -4,16 +4,7 @@ import appStyles from "../../styles/App.css";
 import axios from "axios";
 const crypto = require("crypto");
 import hashPassword from "../../helperFunctions/index";
-// import LoaderWheel from "../../semantic-ui-react/LoaderWheel";
-// import { connect } from "react-redux";
-// import { addUser } from "../../redux/actions/index";
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addUser: article => dispatch(addUser(article))
-//   };
-
-// };
 
 class LoginForm extends Component {
   constructor(props) {

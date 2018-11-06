@@ -54,7 +54,7 @@ class App extends Component {
       this.state.loggedIn === true &&
       this.state.linkedSocialMedia === false
     ) {
-      view = <LinkSocialMedia />;
+      view = <LinkSocialMedia user={this.state} />;
       //if user is logged in and has already connected their social media
     } else if (
       this.state.linkedSocialMedia === true &&

@@ -349,7 +349,7 @@ Accounts.hasOne(AccountInteractions, { foreignKey: "account_id" });
 Accounts.hasOne(AccountTargeting, { foreignKey: "account_id" });
 Accounts.hasOne(AccountRuntime, { foreignKey: "account_id" });
 
-connection.sync({ force: true }); //remove force: false after initial schema is finalized
+connection.sync({ force: false }); //remove force: false after initial schema is finalized
 
 module.exports = {
   Users,
