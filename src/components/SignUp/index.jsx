@@ -27,40 +27,40 @@ class SignUpForm extends Component {
     };
 
     // this.handleChange = this.handleChange.bind(this);
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    // this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+    // this.handleLastNameChange = this.handleLastNameChange.bind(this);
+    // this.handleEmailChange = this.handleEmailChange.bind(this);
+    // this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.postSignUp = this.postSignUp.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
 
-  handleFirstNameChange(event) {
-    event.preventDefault();
-    this.setState({ firstName: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
+  // handleFirstNameChange(event) {
+  //   event.preventDefault();
+  //   this.setState({ firstName: event.target.value }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
 
-  handleLastNameChange(event) {
-    event.preventDefault();
-    this.setState({ lastName: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
+  // handleLastNameChange(event) {
+  //   event.preventDefault();
+  //   this.setState({ lastName: event.target.value }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
 
-  handleEmailChange(event) {
-    event.preventDefault();
-    this.setState({ email: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
-  handlePasswordChange(event) {
-    event.preventDefault();
-    this.setState({ password: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
+  // handleEmailChange(event) {
+  //   event.preventDefault();
+  //   this.setState({ email: event.target.value }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
+  // handlePasswordChange(event) {
+  //   event.preventDefault();
+  //   this.setState({ password: event.target.value }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
 
   handleSubmitOnEnter(event) {
     if (event.key === "Enter") {
@@ -72,15 +72,15 @@ class SignUpForm extends Component {
   postSignUp() {
     //sets requirements for inputs
     if (
-      this.state.firstName.length > 0 &&
-      this.state.lastName.length > 0 &&
-      this.state.email.length > 4 &&
-      this.state.password.length > 6 &&
-      this.state.email.includes("@", ".")
+      this.props.firstName.length > 0 &&
+      this.props.lastName.length > 0 &&
+      this.props.email.length > 4 &&
+      this.props.password.length > 6 &&
+      this.props.email.includes("@", ".")
     ) {
       //hashes password and sends request upon successfull hashing
       crypto.pbkdf2(
-        this.state.password,
+        this.props.password,
         "salt",
         100000,
         64,
@@ -90,9 +90,9 @@ class SignUpForm extends Component {
           var pw = derivedKey.toString("hex");
           var body = {
             uuid: uuidv1(),
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
+            firstName: this.props.firstName,
+            lastName: this.props.lastName,
+            email: this.props.email,
             password: pw
           };
 
@@ -114,10 +114,10 @@ class SignUpForm extends Component {
       //if input requirements are not met
     } else {
       //if email does not contain expected characters
-      if (this.state.email.includes("@", ".") === false) {
+      if (this.props.email.includes("@", ".") === false) {
         window.alert("email is entered incorrectly");
         //if password is not long enough
-      } else if (this.state.password.length < 7) {
+      } else if (this.props.password.length < 7) {
         window.alert("password must be at least 6 characters");
         //if inputs are blank
       } else {
@@ -127,7 +127,7 @@ class SignUpForm extends Component {
   }
 
   render() {
-    const { firstName, lastName, email, password } = this.state;
+    const { firstName, lastName, email, password } = this.props;
     return (
       <div className={styles.centerForm}>
         <div id="SignUpForm" className={styles.form}>
@@ -145,7 +145,7 @@ class SignUpForm extends Component {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handleFirstNameChange(event);
+                    this.props.handleFirstNameChange(event);
                   }}
                 />
               </div>
@@ -163,7 +163,7 @@ class SignUpForm extends Component {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handleLastNameChange(event);
+                    this.props.handleLastNameChange(event);
                   }}
                 />
               </div>
@@ -181,7 +181,7 @@ class SignUpForm extends Component {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handleEmailChange(event);
+                    this.props.handleEmailChange(event);
                   }}
                 />
               </div>
@@ -199,7 +199,7 @@ class SignUpForm extends Component {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handlePasswordChange(event);
+                    this.props.handlePasswordChange(event);
                   }}
                 />
               </div>

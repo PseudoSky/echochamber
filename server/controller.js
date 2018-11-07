@@ -37,7 +37,7 @@ module.exports = {
       })
         .then(data => {
           Users.increment("logins", { where: { email: req.body.email } });
-          console.log("user is verified");
+          console.log("user is verified", data);
           if (data === 1) {
             console.log("count is 1");
             res.status(200).send("true");
@@ -48,6 +48,11 @@ module.exports = {
         .catch(err => {
           console.log("user could not be verified");
         });
+    }
+  },
+  account: {
+    post: (req, res) => {
+      console.log(req);
     }
   }
 };

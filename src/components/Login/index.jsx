@@ -5,7 +5,6 @@ import axios from "axios";
 const crypto = require("crypto");
 import hashPassword from "../../helperFunctions/index";
 
-
 class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -16,23 +15,10 @@ class LoginForm extends Component {
       userVerified: false
     };
 
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.verifyUserData = this.verifyUserData.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
 
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
-
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value }, () => {
-      console.log(this.state);
-    });
-  }
   handleSubmitOnEnter(event) {
     if (event.key === "Enter") {
       this.verifyUserData();
@@ -40,9 +26,11 @@ class LoginForm extends Component {
   }
 
   verifyUserData() {
-    if (this.state.email.length > 0 && this.state.password.length > 0) {
+    console.log(this.props, "props");
+    console.log(this.props.password, "password");
+    if (this.props.email.length > 0 && this.props.password.length > 0) {
       crypto.pbkdf2(
-        this.state.password,
+        this.props.password,
         "salt",
         100000,
         64,
@@ -51,7 +39,7 @@ class LoginForm extends Component {
           if (err) throw err;
           var pw = derivedKey.toString("hex");
           var body = {
-            email: this.state.email,
+            email: this.props.email,
             password: pw
           };
           axios({ method: "put", url: "/api/user", data: body })
@@ -74,7 +62,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password } = this.props;
     return (
       <div className={styles.centerForm}>
         <div id="SignUpForm" className={styles.form}>
@@ -86,12 +74,12 @@ class LoginForm extends Component {
                   className={styles.inputBox}
                   type="text"
                   id="email"
-                  value={email}
+                  value={this.props.email}
                   onKeyUp={() => {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handleEmailChange(event);
+                    this.props.handleEmailChange(event);
                   }}
                 />
               </div>
@@ -104,12 +92,12 @@ class LoginForm extends Component {
                   className={styles.inputBox}
                   type="text"
                   id="password"
-                  value={password}
+                  value={this.props.password}
                   onKeyUp={() => {
                     this.handleSubmitOnEnter(event);
                   }}
                   onChange={() => {
-                    this.handlePasswordChange(event);
+                    this.props.handlePasswordChange(event);
                   }}
                 />
               </div>
