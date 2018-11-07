@@ -7,6 +7,7 @@ class LinkSocialMedia extends Component {
     super(props);
 
     this.state = {
+      email: props.email,
       instagram_username: "",
       instagram_password: "",
       platform: "instagram"
@@ -14,6 +15,7 @@ class LinkSocialMedia extends Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
+    this.addNewUserAccount = this.addNewUserAccount.bind(this);
   }
 
   handleUsernameChange(event) {
@@ -36,8 +38,13 @@ class LinkSocialMedia extends Component {
 
   handleSubmitOnEnter(event) {
     if (event.key === "Enter") {
-      //this.verifyUserData();
+      this.addNewUserAccount();
     }
+  }
+
+  addNewUserAccount() {
+    console.log(this.props, "props");
+    console.log(this.state, "state");
   }
 
   render() {
@@ -98,7 +105,7 @@ class LinkSocialMedia extends Component {
 
             <div className={styles.buttonIndent}>
               <button
-                onClick={this.verifyUserData}
+                onClick={this.addNewUserAccount}
                 className={appStyles.wideButton}
                 type="submit"
               >

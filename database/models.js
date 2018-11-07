@@ -354,5 +354,7 @@ connection.sync({ force: false }); //remove force: false after initial schema is
 module.exports = {
   Users,
   Accounts,
-  AccountInteractions
+  AccountInteractions,
+  AccountTargeting,
+  AccountRuntime
 };
