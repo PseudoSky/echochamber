@@ -14,6 +14,7 @@ class App extends Component {
       lastName: "",
       email: "",
       password: "",
+      instagramAccounts: [],
       loggedIn: false,
       alreadyHasCredentials: false,
       linkedSocialMedia: false
@@ -26,6 +27,7 @@ class App extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
+    this.handleAccountChange = this.handleAccountChange.bind(this);
   }
 
   loginButton() {
@@ -81,6 +83,12 @@ class App extends Component {
     });
   }
 
+  handleAccountChange(accountObject) {
+    this.setState(accountObject, () => {
+      console.log(this.state);
+    });
+  }
+
   render() {
     var view;
     //if user is logged in but has not connected social media yet
@@ -88,7 +96,14 @@ class App extends Component {
       this.state.loggedIn === true &&
       this.state.linkedSocialMedia === false
     ) {
-      view = <LinkSocialMedia user={this.state} />;
+      view = (
+        <LinkSocialMedia
+          email={this.state.email}
+          instagramAccounts={this.state.instagramAccounts}
+          firstName={this.state.firstName}
+          handleAccountChange={this.handleAccountChange}
+        />
+      );
       //if user is logged in and has already connected their social media
     } else if (
       this.state.linkedSocialMedia === true &&
