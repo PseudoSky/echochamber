@@ -5,6 +5,30 @@ import axios from "axios";
 const crypto = require("crypto");
 import hashPassword from "../../helperFunctions/index";
 const uuidv1 = require("uuid/v1");
+import EditModal from "../EditModal";
+import { Button, Header, Image, Modal } from "semantic-ui-react";
+
+// const Rando = () => (
+//   <Modal trigger={<Button>Show Modal</Button>}>
+//     <EditModal />
+//     <Modal.Header>Select a Photo</Modal.Header>
+//     <Modal.Content image>
+//       <Image
+//         wrapped
+//         size="medium"
+//         src="https://react.semantic-ui.com/images/avatar/large/rachel.png"
+//       />
+//       <Modal.Description>
+//         <Header>Default Profile Image</Header>
+//         <p>
+//           We've found the following gravatar image associated with your e-mail
+//           address.
+//         </p>
+//         <p>Is it okay to use this photo?</p>
+//       </Modal.Description>
+//     </Modal.Content>
+//   </Modal>
+// );
 
 // import { connect } from "react-redux";
 // import { addUser } from "../../redux/actions/index";
@@ -97,6 +121,7 @@ class SignUpForm extends Component {
           <div className={styles.centerContent}>
             <div className={styles.inputLine}>
               {/* first name label and input */}
+              {/* <Rando /> */}
               <div className={styles.label}>First Name</div>
               <div className={styles.input}>
                 <input

@@ -1,7 +1,6 @@
 import React from "react";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 
-
 const LoaderWheel = () => (
   <Segment>
     <Dimmer active>
@@ -12,8 +11,8 @@ const LoaderWheel = () => (
 
 export default LoaderWheel;
 
-{
-  /* <div class='ui segment'>
+// {
+/* <div class='ui segment'>
 <div class='ui active transition visible dimmer'>
   <div class='content'>
     <div class='ui mini text loader'>Loading</div>
@@ -21,4 +20,4 @@ export default LoaderWheel;
 </div>
 <img src='/images/wireframe/short-paragraph.png' class='ui image' />
 </div> */
-}
+// }

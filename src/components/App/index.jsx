@@ -4,10 +4,13 @@ import LoginForm from "../Login/index.jsx";
 import Navbar from "../Navbar/index";
 import Dashboard from "../Dashboard/index";
 import LinkSocialMedia from "../LinkSocialMedia/index";
-
+var axios = require("axios");
+import "semantic-ui-css/semantic.min.css";
+// console.log("up my ass");
 class App extends Component {
   constructor(props) {
     super(props);
+    // <Input name="max_shits" placeholder='Search...' onChange={(e,{value, name}) => console.info(name,value)} />
 
     this.state = {
       firstName: "",
@@ -84,14 +87,23 @@ class App extends Component {
   }
 
   handleAccountChange(accountObject) {
-    this.setState(accountObject, () => {
-      console.log(this.state);
-    });
+    axios({
+      method: "post",
+      url: "/api/user/account",
+      data: accountObject
+    })
+      .then(data => {
+        this.setState({ instagramAccounts: accountObject });
+      })
+      .catch(err => {
+        console.log("account not added", err);
+      });
   }
 
   render() {
     var view;
     //if user is logged in but has not connected social media yet
+    // PAGE: /addaccount
     if (
       this.state.loggedIn === true &&
       this.state.linkedSocialMedia === false
