@@ -9,13 +9,17 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      verifying: "false"
+    };
 
     this.verifyUserData = this.verifyUserData.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
 
   handleSubmitOnEnter(event) {
+    this.setState({ verifying: true });
+
     if (event.key === "Enter") {
       this.verifyUserData();
     }
@@ -58,6 +62,13 @@ class LoginForm extends Component {
   }
 
   render() {
+    // if (this.state.verifying) {
+    //   let Loader = function() {
+    //     return <div class="ui active centered inline loader" />;
+    //   };
+    // } else {
+    //   let Loader = null;
+    // }
     const { email, password } = this.props;
     return (
       <div className={styles.centerForm}>
@@ -71,10 +82,10 @@ class LoginForm extends Component {
                   type="text"
                   id="email"
                   value={this.props.email}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handleEmailChange(event);
                   }}
                 />
@@ -89,10 +100,10 @@ class LoginForm extends Component {
                   type="text"
                   id="password"
                   value={this.props.password}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handlePasswordChange(event);
                   }}
                 />
@@ -107,9 +118,6 @@ class LoginForm extends Component {
               >
                 Login
               </button>
-            </div>
-            <div class="ui active centered inline loader">
-              {/* <LoaderWheel /> */}
             </div>
           </div>
         </div>

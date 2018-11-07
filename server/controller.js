@@ -13,6 +13,14 @@ const {
   ConfigRuntime
 } = require("../database/models.js");
 
+const { Pool } = require("pg");
+const pool = new Pool({
+  user: "katiemcculloch",
+  host: "localhost",
+  database: "gyfanbase",
+  port: 5432
+});
+
 module.exports = {
   user: {
     post: (req, res) => {
@@ -58,7 +66,33 @@ module.exports = {
   },
   account: {
     post: (req, res) => {
-      console.log(req);
+      console.log(req.body[0].email, "katie email");
+      pool
+        .query(`SELECT uuid FROM users WHERE email='${req.body[0].email}'`)
+        .then(data => {
+          console.log(data["rows"][0]["uuid"], "uuid");
+          let user_uuid = data["rows"][0]["uuid"];
+
+          var account = Accounts.build({
+            account_id: user_uuid + Math.floor(Math.random() * 1000),
+            platform: req.body[0].platform,
+            username: req.body[0].username,
+            password: req.body[0].password,
+            checkpoint_method: req.body[0].checkpoint_method,
+            userUuid: user_uuid
+          });
+
+          account
+            .save()
+            .then(data => {
+              console.log("account data successfully posted");
+              res.status(200).send("account data successfully posted");
+            })
+            .catch(err => {
+              console.log(err);
+              res.sendStatus(401);
+            });
+        });
     }
   }
 };

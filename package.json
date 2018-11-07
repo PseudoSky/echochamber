@@ -28,7 +28,7 @@
     "file-loader": "^2.0.0",
     "nodemon": "^1.18.4",
     "pbkdf2": "^3.0.17",
-    "pg": "^7.5.0",
+    "pg": "^7.6.1",
     "prop-types": "^15.6.2",
     "rc-slider": "8.6.3",
     "rc-tooltip": "3.7.3",

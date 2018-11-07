@@ -10,12 +10,17 @@ class LinkSocialMedia extends Component {
     this.state = {
       account_username: "",
       account_password: "",
-      platform: "instagram"
+      platform: "Instagram",
+      selected_checkpoint_method: "Email",
+      other_checkpoint_method: "Phone"
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
     this.addNewUserAccount = this.addNewUserAccount.bind(this);
+    this.handleCheckpointMethodChange = this.handleCheckpointMethodChange.bind(
+      this
+    );
   }
 
   handleUsernameChange(event) {
@@ -42,6 +47,38 @@ class LinkSocialMedia extends Component {
     }
   }
 
+  handleCheckpointMethodChange(event) {
+    if (
+      (event.target.value =
+        "Email" && this.state.selected_checkpoint_method !== "Email")
+    ) {
+      this.setState(
+        {
+          selected_checkpoint_method: "Email",
+          other_checkpoint_method: "Phone"
+        },
+        () => {
+          console.log("state", this.state);
+        }
+      );
+    } else {
+      if (
+        (event.target.value =
+          "Phone" && this.state.selected_checkpoint_method !== "Phone")
+      ) {
+        this.setState(
+          {
+            selected_checkpoint_method: "Phone",
+            other_checkpoint_method: "Email"
+          },
+          () => {
+            console.log("state", this.state);
+          }
+        );
+      }
+    }
+  }
+
   addNewUserAccount() {
     console.log(this.props, "props");
     var addAccountToState = this.props.instagramAccounts.map(a => {
@@ -51,14 +88,24 @@ class LinkSocialMedia extends Component {
       email: this.props.email,
       platform: this.state.platform,
       username: this.state.account_username,
-      password: this.state.account_password
+      password: this.state.account_password,
+      checkpoint_method: this.state.selected_checkpoint_method
     });
+
+    axios({ method: "put", url: "/api/user/account", data: addAccountToState })
+      .then(data => {
+        console.log(data, "data");
+      })
+      .catch(err => {
+        console.log("user not verified", err);
+      });
+
     console.log("addAccountToState", addAccountToState);
     this.props.handleAccountChange(addAccountToState);
   }
 
   render() {
-    const { instagram_username, instagram_password, platform } = this.state;
+    const { account_username, account_password, platform } = this.state;
     return (
       <div className={styles.centerForm}>
         <div id="SignUpForm" className={styles.form}>
@@ -66,14 +113,29 @@ class LinkSocialMedia extends Component {
             <div className={styles.addSocialHeader}>Add your social media </div>
             <div className={styles.inputLine}>
               <div className={styles.label}>Platform</div>
+
               <div className={styles.dropdown}>
-                <button className={styles.dropbtn}>
-                  Instagram <i src="../../styles/images/dropdown_arrow.jpg" />
-                </button>
+                {" "}
+                <button className={styles.dropbtn}>Instagram</button>
                 <div className={styles.dropdown_content}>
                   {/* <a href="#">Link 1</a>
                   <a href="#">Link 2</a>
                   <a href="#">Link 3</a> */}
+                </div>
+              </div>
+            </div>
+            <div className={styles.inputLine}>
+              <div className={styles.label}>Verify Via</div>
+
+              <div className={styles.dropdown}>
+                {" "}
+                <button className={styles.dropbtn}>
+                  {this.state.selected_checkpoint_method}
+                </button>
+                <div className={styles.dropdown_content}>
+                  <a onClick={this.handleCheckpointMethodChange} href="#">
+                    {this.state.other_checkpoint_method}
+                  </a>
                 </div>
               </div>
             </div>
@@ -83,12 +145,12 @@ class LinkSocialMedia extends Component {
                 <input
                   className={styles.inputBox}
                   type="text"
-                  id="instagram_username"
-                  value={instagram_username}
-                  onKeyUp={() => {
+                  id="account_username"
+                  value={account_username}
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.handleUsernameChange(event);
                   }}
                 />
@@ -101,12 +163,12 @@ class LinkSocialMedia extends Component {
                 <input
                   className={styles.inputBox}
                   type="text"
-                  id="instagram_password"
-                  value={instagram_password}
-                  onKeyUp={() => {
+                  id="account_password"
+                  value={account_password}
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.handlePasswordChange(event);
                   }}
                 />
@@ -122,11 +184,9 @@ class LinkSocialMedia extends Component {
                 Add Account
               </button>
             </div>
-            <div class="ui active centered inline loader">
-              {/* <LoaderWheel /> */}
-            </div>
+            {/* <div class="ui active centered inline loader" /> */}
           </div>
-        </div>
+        </div>{" "}
       </div>
     );
   }
