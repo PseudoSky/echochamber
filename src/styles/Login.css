@@ -1,10 +1,10 @@
 .form {
   display: flex;
   flex-direction: column;
-  border: 5px solid white;
+  border: 2px solid lightblue;
   margin-top: 20px;
-  width: 300px;
-  height: 150px;
+  width: 500px;
+  height: 300px;
   justify-content: center;
   padding: 10px;
   box-shadow: 4px 4px #deeff5;
@@ -19,7 +19,7 @@
 }
 
 .centerContent {
-  padding-left: 34px;
+  padding-left: 115px;
 }
 
 .label {
@@ -64,7 +64,7 @@
   -webkit-text-stroke-width: 0.25px;
   -webkit-text-stroke-color: white;
   padding-bottom: 15px;
-  padding-left: 35px;
+  padding-left: 60px;
 }
 
 .dropbtn {
@@ -73,8 +73,8 @@
   font-size: 10px;
   border: none;
   color: #111517;
-  width: 140px;
-  height: 19px;
+  width: 165px;
+  height: 22px;
   border: 0.02px solid lightgrey;
   display: flex;
   padding-left: 13px;
@@ -107,13 +107,14 @@
   display: block;
   color: #111517;
   font-size: 10px;
-  -webkit-text-stroke-width: 0.25px;
-  -webkit-text-stroke-color: white;
+  font-style: italic;
+  /* -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white; */
 }
 
 /* Change color of dropdown links on hover */
 .dropdown_content a:hover {
-  background-color: #ddd;
+  background-color: white;
 }
 
 /* Show the dropdown menu on hover */

@@ -273,21 +273,21 @@ var config_interactions_default = {
 // Users, Accounts, ConfigInteractions, ConfigTargeting, ConfigRuntime;
 
 // config_interactions_default
-var save_config_interactions_default = ConfigInteractions.build({
-  config_interactions_default
-});
+// var save_config_interactions_default = ConfigInteractions.build({
+//   config_interactions_default
+// });
 
-var saveData = function() {
-  save_config_interactions_default
-    .save()
-    .then(data => {
-      "data was successfully poted";
-    })
-    .catch(err => {
-      "there was an err", err;
-    });
-};
+// var saveData = function() {
+//   save_config_interactions_default
+//     .save()
+//     .then(data => {
+//       "data was successfully poted";
+//     })
+//     .catch(err => {
+//       "there was an err", err;
+//     });
+// };
 
-saveData();
+// saveData();
 
-module.exports = config_interactions_default;
+// module.exports = config_interactions_default;

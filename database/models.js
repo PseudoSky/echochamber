@@ -55,7 +55,8 @@ const Accounts = connection.define("accounts", {
 
   account_id: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    primaryKey: true
   },
   platform: {
     type: Sequelize.STRING,
@@ -388,10 +389,17 @@ const ConfigRuntime = connection.define("config_runtime", {
   }
 });
 
-Users.hasMany(Accounts, { foreignKey: "uuid " });
-Accounts.hasMany(ConfigInteractions, { foreignKey: "account_id" });
-Accounts.hasMany(ConfigTargeting, { foreignKey: "account_id" });
-Accounts.hasOne(ConfigRuntime, { foreignKey: "account_id" });
+Users.belongsToMany(Accounts, { through: "uuid " });
+Accounts.belongsTo(Users, { through: "uuid" });
+
+Accounts.belongsToMany(ConfigInteractions, { through: "account_id" });
+ConfigInteractions.belongsTo(Accounts, { through: "account_id" });
+
+Accounts.belongsToMany(ConfigTargeting, { through: "account_id" });
+ConfigTargeting.belongsTo(Accounts, { through: "account_id" });
+
+Accounts.belongsToMany(ConfigRuntime, { through: "account_id" });
+ConfigRuntime.belongsTo(Accounts, { through: "account_id" });
 
 connection.sync({ force: false }); //remove force: false after initial schema is finalized
 

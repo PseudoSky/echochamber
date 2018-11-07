@@ -129,10 +129,10 @@ class SignUpForm extends Component {
                   type="text"
                   id="firstName"
                   value={firstName}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handleFirstNameChange(event);
                   }}
                 />
@@ -147,10 +147,10 @@ class SignUpForm extends Component {
                   type="text"
                   id="lastName"
                   value={lastName}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handleLastNameChange(event);
                   }}
                 />
@@ -165,10 +165,10 @@ class SignUpForm extends Component {
                   type="text"
                   id="form"
                   value={email}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handleEmailChange(event);
                   }}
                 />
@@ -183,10 +183,10 @@ class SignUpForm extends Component {
                   type="text"
                   id="form"
                   value={password}
-                  onKeyUp={() => {
+                  onKeyUp={event => {
                     this.handleSubmitOnEnter(event);
                   }}
-                  onChange={() => {
+                  onChange={event => {
                     this.props.handlePasswordChange(event);
                   }}
                 />
