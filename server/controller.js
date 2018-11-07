@@ -5,7 +5,13 @@ var sequelize = new Sequelize("gyfanbase", "katiemcculloch", "", {
 var pbkdf2 = require("pbkdf2");
 // var s = pbkdf2.generateSaltSync(32);
 
-const { Users } = require("../database/models.js");
+const {
+  Users,
+  Accounts,
+  ConfigInteractions,
+  ConfigTargeting,
+  ConfigRuntime
+} = require("../database/models.js");
 
 module.exports = {
   user: {
