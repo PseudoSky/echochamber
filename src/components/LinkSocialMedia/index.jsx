@@ -44,23 +44,17 @@ class LinkSocialMedia extends Component {
 
   addNewUserAccount() {
     console.log(this.props, "props");
-    var addAccountToState = this.props.instagramAccounts.push({
+    var addAccountToState = this.props.instagramAccounts.map(a => {
+      return { ...a };
+    });
+    addAccountToState.push({
+      email: this.props.email,
       platform: this.state.platform,
       username: this.state.account_username,
       password: this.state.account_password
     });
     console.log("addAccountToState", addAccountToState);
-    axios({
-      method: "post",
-      url: `/api/user:${this.props.email}/account`,
-      body: addAccountToState
-    })
-      .then(data => {
-        this.props.handleAccountChange(addAccountToState);
-      })
-      .catch(err => {
-        console.log("account not added", err);
-      });
+    this.props.handleAccountChange(addAccountToState);
   }
 
   render() {
