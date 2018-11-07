@@ -9,11 +9,7 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      email: "",
-      password: "",
-      userVerified: false
-    };
+    this.state = {};
 
     this.verifyUserData = this.verifyUserData.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);

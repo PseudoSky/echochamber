@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import styles from "../../styles/Login.css";
 import appStyles from "../../styles/App.css";
+var axios = require("axios");
 
 class LinkSocialMedia extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: props.email,
-      instagram_username: "",
-      instagram_password: "",
+      account_username: "",
+      account_password: "",
       platform: "instagram"
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -19,13 +19,13 @@ class LinkSocialMedia extends Component {
   }
 
   handleUsernameChange(event) {
-    this.setState({ instagram_username: event.target.value }, () => {
+    this.setState({ account_username: event.target.value }, () => {
       console.log(this.state);
     });
   }
 
   handlePasswordChange(event) {
-    this.setState({ instagram_password: event.target.value }, () => {
+    this.setState({ account_password: event.target.value }, () => {
       console.log(this.state);
     });
   }
@@ -44,7 +44,23 @@ class LinkSocialMedia extends Component {
 
   addNewUserAccount() {
     console.log(this.props, "props");
-    console.log(this.state, "state");
+    var addAccountToState = this.props.instagramAccounts.push({
+      platform: this.state.platform,
+      username: this.state.account_username,
+      password: this.state.account_password
+    });
+    console.log("addAccountToState", addAccountToState);
+    axios({
+      method: "post",
+      url: `/api/user:${this.props.email}/account`,
+      body: addAccountToState
+    })
+      .then(data => {
+        this.props.handleAccountChange(addAccountToState);
+      })
+      .catch(err => {
+        console.log("account not added", err);
+      });
   }
 
   render() {

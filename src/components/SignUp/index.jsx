@@ -19,48 +19,11 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
-    };
+    this.state = {};
 
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    // this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    // this.handleEmailChange = this.handleEmailChange.bind(this);
-    // this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.postSignUp = this.postSignUp.bind(this);
     this.handleSubmitOnEnter = this.handleSubmitOnEnter.bind(this);
   }
-
-  // handleFirstNameChange(event) {
-  //   event.preventDefault();
-  //   this.setState({ firstName: event.target.value }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
-
-  // handleLastNameChange(event) {
-  //   event.preventDefault();
-  //   this.setState({ lastName: event.target.value }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
-
-  // handleEmailChange(event) {
-  //   event.preventDefault();
-  //   this.setState({ email: event.target.value }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
-  // handlePasswordChange(event) {
-  //   event.preventDefault();
-  //   this.setState({ password: event.target.value }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
 
   handleSubmitOnEnter(event) {
     if (event.key === "Enter") {
