@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("./index.js");
+const config_interactions_default = require("./defaultSeedData");
 
 // USERS;
 const Users = connection.define("users", {
@@ -54,37 +55,33 @@ const Accounts = connection.define("accounts", {
 
   account_id: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    primaryKey: true
+    unique: true
   },
-
+  platform: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   active: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
+    type: Sequelize.STRING,
+    defaultValue: "pending",
+    allowNull: false
   },
   beta: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   },
   checkpoint_method: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  initial_affinity_cardinality: {
-    type: Sequelize.INTEGER
-  },
-  initial_affinity_max: {
-    type: Sequelize.INTEGER
-  },
-  initial_affinity_mean: {
-    type: Sequelize.FLOAT
-  },
-  initial_affinity_min: {
-    type: Sequelize.INTEGER
-  },
-  initial_affinity: {
-    type: Sequelize.INTEGER
   },
   last_start: {
     type: Sequelize.STRING
@@ -92,30 +89,33 @@ const Accounts = connection.define("accounts", {
   initial_date: {
     type: Sequelize.DATE
   },
-  initial_follower_count: {
+  initial_following_count: {
     type: Sequelize.INTEGER
   },
-  initial_following_count: {
+  initial_follower_count: {
     type: Sequelize.INTEGER
   },
   initial_media_count: {
     type: Sequelize.INTEGER
   },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
+  initial_affinity: {
+    type: Sequelize.INTEGER
   },
-  platform: {
-    type: Sequelize.STRING,
-    defaultValue: "instagram"
+  initial_affinity_mean: {
+    type: Sequelize.FLOAT
   },
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false
+  initial_affinity_cardinality: {
+    type: Sequelize.INTEGER
+  },
+  initial_affinity_min: {
+    type: Sequelize.INTEGER
+  },
+  initial_affinity_max: {
+    type: Sequelize.INTEGER
   }
 });
 
-const AccountInteractions = connection.define("account_interactions", {
+const ConfigInteractions = connection.define("config_interactions", {
   // cut_point_follow_max Do not allow the user's following to go above below this value
   // cut_point_follow_min Do not allow the user's following to drop below this value
   // cut_point_follow_ratio Do not allow the user's follow/following to drop below this value
@@ -138,67 +138,99 @@ const AccountInteractions = connection.define("account_interactions", {
   // min_media_follow Minimum number of posts a user needs to be considered
   // min_affinity Minimum affinity a user must have to retain the user as a follower
   cut_point_follow_max: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   cut_point_follow_min: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   cut_point_follow_ratio: {
-    type: Sequelize.FLOAT
+    type: Sequelize.FLOAT,
+    allowNull: false
   },
   blacklist: {
-    type: Sequelize.TEXT("LONGTEXT2")
+    type: Sequelize.TEXT("LONGTEXT2"),
+    allowNull: false
   },
   blacklist_tags: {
-    type: Sequelize.TEXT("LONGTEXT2")
+    type: Sequelize.TEXT("LONGTEXT2"),
+    allowNull: false
   },
   blacklist_usernames: {
-    type: Sequelize.TEXT("LONGTEXT2")
+    type: Sequelize.TEXT("LONGTEXT2"),
+    allowNull: false
   },
   force_unfollow: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
   like_from_discover: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
-  // max_like_for_one_tag (int: likes/tag)
-  // like_per_day (int: likes)
+  max_like_for_one_tag: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  like_per_day: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   follow_per_day: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  unfollow_per_day: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  comments_per_day: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  media_max_like: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  media_min_like: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  media_min_interest: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   follow_and_like_max: {
     type: Sequelize.INTEGER
   },
-  unfollow_per_day: {
-    type: Sequelize.INTEGER
-  },
-  timeout: {
-    type: Sequelize.INTEGER
-  },
-  media_max_like: {
-    type: Sequelize.INTEGER
-  },
-  media_min_interest: {
-    type: Sequelize.INTEGER
-  },
-  media_min_like: {
-    type: Sequelize.INTEGER
-  },
   max_target_followers: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   min_target_followers: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   min_media_follow: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   min_affinity: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  start_date: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
+  end_date: {
+    type: Sequelize.DATE,
+    allowNull: true
   }
 });
 
-const AccountTargeting = connection.define("account_targeting", {
+const ConfigTargeting = connection.define("config_targeting", {
   // users A set of users that have followers of interest
   // locations list of locations to target
   // gender The target ratio of males to females in the audience 0.5 being half and half
@@ -214,54 +246,66 @@ const AccountTargeting = connection.define("account_targeting", {
   // target_class only pull targets from specified response class (pool_targets must be enabled)
 
   users: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false
   },
   locations: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false
   },
   gender: {
-    type: Sequelize.FLOAT
+    type: Sequelize.FLOAT,
+    allowNull: false
   },
   tags: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false
   },
   rolling_tags: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
   allow_personal_accounts: {
     type: Sequelize.BOOLEAN,
-    defaultValue: true
+    allowNull: false
   },
   allow_business_accounts: {
     type: Sequelize.BOOLEAN,
-    defaultValue: true
+    allowNull: false
   },
   allow_private_accounts: {
     type: Sequelize.BOOLEAN,
-    defaultValue: true
+    allowNull: false
   },
   affinity_targeting: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    allowNull: false
   },
   pool_targets: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
   pool_name: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false
   },
   pool_to_discover_ratio: {
-    type: Sequelize.FLOAT
+    type: Sequelize.FLOAT,
+    allowNull: false
   },
   target_class: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 });
 
-const AccountRuntime = connection.define("account_runtime", {
+const ConfigRuntime = connection.define("config_runtime", {
   // log_level The persistent log write level from debug (0) to 1000 (failure)
 
   log_level: {
+    type: Sequelize.INTEGER
+  },
+  log_mod: {
     type: Sequelize.INTEGER
   },
 
@@ -345,16 +389,16 @@ const AccountRuntime = connection.define("account_runtime", {
 });
 
 Users.hasMany(Accounts, { foreignKey: "uuid " });
-Accounts.hasOne(AccountInteractions, { foreignKey: "account_id" });
-Accounts.hasOne(AccountTargeting, { foreignKey: "account_id" });
-Accounts.hasOne(AccountRuntime, { foreignKey: "account_id" });
+Accounts.hasMany(ConfigInteractions, { foreignKey: "account_id" });
+Accounts.hasMany(ConfigTargeting, { foreignKey: "account_id" });
+Accounts.hasOne(ConfigRuntime, { foreignKey: "account_id" });
 
 connection.sync({ force: false }); //remove force: false after initial schema is finalized
 
 module.exports = {
   Users,
   Accounts,
-  AccountInteractions,
-  AccountTargeting,
-  AccountRuntime
+  ConfigInteractions,
+  ConfigTargeting,
+  ConfigRuntime
 };
