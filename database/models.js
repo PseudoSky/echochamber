@@ -55,14 +55,19 @@ const Accounts = connection.define("accounts", {
 
   account_id: {
     type: Sequelize.STRING,
-    unique: true,
-    primaryKey: true
+    unique: true
   },
   platform: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    primaryKey: true
   },
   username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true
+  },
+  email: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -421,7 +426,7 @@ Accounts.belongsToMany(ConfigTargeting, { through: "account_id" });
 ConfigTargeting.belongsTo(Accounts, { through: "account_id" });
 
 Accounts.belongsToMany(ConfigRuntime, { through: "account_id" });
-ConfigRuntime.belongsTo(Accounts, { through: "account_id" });
+ConfigRuntime.belongsTo(Accounts, { primaryKey: "account_id" });
 
 connection.sync({ force: true }); //remove force: false after initial schema is finalized
 

@@ -67,21 +67,20 @@ module.exports = {
   account: {
     post: (req, res) => {
       console.log(req.body[0].email, "katie email");
+      user_email = req.body[0].email;
+      username = req.body[0].username;
       pool
-        .query(`SELECT uuid FROM users WHERE email='${req.body[0].email}'`)
+        .query(`SELECT uuid FROM users WHERE email='${email}'`)
         .then(data => {
-          console.log(data["rows"][0]["uuid"], "uuid");
           let user_uuid = data["rows"][0]["uuid"];
-
           var account = Accounts.build({
-            account_id: user_uuid + Math.floor(Math.random() * 1000),
             platform: req.body[0].platform,
             username: req.body[0].username,
             password: req.body[0].password,
             checkpoint_method: req.body[0].checkpoint_method,
-            userUuid: user_uuid
+            userUuid: user_uuid,
+            email: user_email
           });
-
           account
             .save()
             .then(data => {
@@ -89,9 +88,13 @@ module.exports = {
               res.status(200).send("account data successfully posted");
             })
             .catch(err => {
-              console.log(err);
+              console.log(err, "there was an error");
               res.sendStatus(401);
             });
+        })
+
+        .catch(err => {
+          console.log("err", err);
         });
     }
   }
