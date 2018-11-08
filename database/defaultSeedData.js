@@ -1,10 +1,4 @@
-const {
-  Users,
-  Accounts,
-  ConfigInteractions,
-  ConfigTargeting,
-  ConfigRuntime
-} = require("./models.js");
+//-------------ACCOUNTS--------------
 
 // ACCOUNTS
 // Will be posted from Add Account Component, but here is a sample object of account table
@@ -28,6 +22,11 @@ const {
 // 	"initial_affinity_min ": "",
 // 	"initial_affinity_max ": "",
 // }
+
+//ADD CONSTRAINTS
+//alter table accounts drop constraint "accounts_pkey", add primary key(username, platform, email);
+
+//-----------------INTERACTIONS------------------
 
 // INTERACTIONS columns
 // version
@@ -241,7 +240,7 @@ const {
 //THIS COMMAND DOWNLOADS CSV OF ALL CONFIG_INTERACTIONS
 //\copy (select * from config_interactions) TO '~/Downloads/gynbase.csv' CSV HEADER
 
-// TARGETING
+//-------------TARGETING--------------
 
 // var config_targeting_default = {
 // 	"users": [],
@@ -259,7 +258,7 @@ const {
 // 	"target_class": 0,
 // }
 
-// // RUNTIME
+//-------------RUNTIME--------------
 
 // var config_runtime_default = {
 // 	"log_level": 10,
@@ -284,4 +283,3 @@ const {
 // 	"timeout_update_preferences": 7200,
 // 	"backoff_inspect": 1
 // }
-
