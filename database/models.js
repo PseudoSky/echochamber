@@ -113,123 +113,145 @@ const Accounts = connection.define("accounts", {
   },
   initial_affinity_max: {
     type: Sequelize.INTEGER
+  },
+  config_interaction_version: {
+    type: Sequelize.STRING,
+    defaultValue: "default"
+  },
+  config_targeting_version: {
+    type: Sequelize.STRING,
+    defaultValue: "default"
+  },
+  config_runtime_version: {
+    type: Sequelize.STRING,
+    defaultValue: "default"
   }
 });
 
-const ConfigInteractions = connection.define("config_interactions", {
-  // cut_point_follow_max Do not allow the user's following to go above below this value
-  // cut_point_follow_min Do not allow the user's following to drop below this value
-  // cut_point_follow_ratio Do not allow the user's follow/following to drop below this value
-  // blacklist Users to not interact with a lookup table mapping username -- id
-  // blacklist_tags list of fragments to used to filter/ignore media
-  // blacklist_usernames list of fragments to used to filter/ignore users
-  // force_unfollow Always unfollow users after timeout expires
-  // like_from_discover Allow likes to originate from the discover process rather than directly
-  // max_like_for_one_tag Maximum likes to queue from the discovery feed for a given tag (requires like_from_discover to be enabled)
-  // like_per_day Total number of like actions to perform in 24 hours (0-1000)
-  // follow_per_day Total number of follow actions to perform in a dat (0-800)
-  // unfollow_per_day Total number of unfollow actions to perform in a dat (0-800)
-  // timeout Grace period allowed for a target before evaluated for removal (ex: min time until unfollow)
-  // media_max_like Maximum number of likes a post can have for the bot to like it
-  // media_min_like Minimum number of likes a post can have for the bot to like it
-  // media_min_interest The minimum number of targeted tags a post must have in order to like it
-  // follow_and_like_max Maximum posts to like after following
-  // max_target_followers Parameter to filter user discovery by bounding the maximum number of users they follow
-  // min_target_followers Parameter to filter user discovery by bounding the minimum number of users they follow
-  // min_media_follow Minimum number of posts a user needs to be considered
-  // min_affinity Minimum affinity a user must have to retain the user as a follower
-  cut_point_follow_max: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+const ConfigInteractions = connection.define(
+  "config_interactions",
+  {
+    // cut_point_follow_max Do not allow the user's following to go above below this value
+    // cut_point_follow_min Do not allow the user's following to drop below this value
+    // cut_point_follow_ratio Do not allow the user's follow/following to drop below this value
+    // blacklist Users to not interact with a lookup table mapping username -- id
+    // blacklist_tags list of fragments to used to filter/ignore media
+    // blacklist_usernames list of fragments to used to filter/ignore users
+    // force_unfollow Always unfollow users after timeout expires
+    // like_from_discover Allow likes to originate from the discover process rather than directly
+    // max_like_for_one_tag Maximum likes to queue from the discovery feed for a given tag (requires like_from_discover to be enabled)
+    // like_per_day Total number of like actions to perform in 24 hours (0-1000)
+    // follow_per_day Total number of follow actions to perform in a dat (0-800)
+    // unfollow_per_day Total number of unfollow actions to perform in a dat (0-800)
+    // timeout Grace period allowed for a target before evaluated for removal (ex: min time until unfollow)
+    // media_max_like Maximum number of likes a post can have for the bot to like it
+    // media_min_like Minimum number of likes a post can have for the bot to like it
+    // media_min_interest The minimum number of targeted tags a post must have in order to like it
+    // follow_and_like_max Maximum posts to like after following
+    // max_target_followers Parameter to filter user discovery by bounding the maximum number of users they follow
+    // min_target_followers Parameter to filter user discovery by bounding the minimum number of users they follow
+    // min_media_follow Minimum number of posts a user needs to be considered
+    // min_affinity Minimum affinity a user must have to retain the user as a follower
+    version: {
+      type: Sequelize.STRING,
+      primaryKey: true
+    },
+    cut_point_follow_max: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    cut_point_follow_min: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    cut_point_follow_ratio: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    blacklist: {
+      type: Sequelize.TEXT("LONGTEXT2"),
+      allowNull: false
+    },
+    blacklist_tags: {
+      type: Sequelize.TEXT("LONGTEXT2"),
+      allowNull: false
+    },
+    blacklist_usernames: {
+      type: Sequelize.TEXT("LONGTEXT2"),
+      allowNull: false
+    },
+    force_unfollow: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    like_from_discover: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    max_like_for_one_tag: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    like_per_day: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    follow_per_day: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    unfollow_per_day: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    comments_per_day: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    media_max_like: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    media_min_like: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    media_min_interest: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    follow_and_like_max: {
+      type: Sequelize.INTEGER
+    },
+    max_target_followers: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    min_target_followers: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    min_media_follow: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    min_affinity: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    start_date: {
+      type: Sequelize.DATE,
+      allowNull: true
+    },
+    end_date: {
+      type: Sequelize.DATE,
+      allowNull: true
+    }
   },
-  cut_point_follow_min: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  cut_point_follow_ratio: {
-    type: Sequelize.FLOAT,
-    allowNull: false
-  },
-  blacklist: {
-    type: Sequelize.TEXT("LONGTEXT2"),
-    allowNull: false
-  },
-  blacklist_tags: {
-    type: Sequelize.TEXT("LONGTEXT2"),
-    allowNull: false
-  },
-  blacklist_usernames: {
-    type: Sequelize.TEXT("LONGTEXT2"),
-    allowNull: false
-  },
-  force_unfollow: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
-  },
-  like_from_discover: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
-  },
-  max_like_for_one_tag: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  like_per_day: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  follow_per_day: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  unfollow_per_day: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  comments_per_day: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  media_max_like: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  media_min_like: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  media_min_interest: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  follow_and_like_max: {
-    type: Sequelize.INTEGER
-  },
-  max_target_followers: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  min_target_followers: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  min_media_follow: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  min_affinity: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  start_date: {
-    type: Sequelize.DATE,
-    allowNull: true
-  },
-  end_date: {
-    type: Sequelize.DATE,
-    allowNull: true
+  {
+    timestamps: false
   }
-});
+);
 
 const ConfigTargeting = connection.define("config_targeting", {
   // users A set of users that have followers of interest
@@ -401,7 +423,7 @@ ConfigTargeting.belongsTo(Accounts, { through: "account_id" });
 Accounts.belongsToMany(ConfigRuntime, { through: "account_id" });
 ConfigRuntime.belongsTo(Accounts, { through: "account_id" });
 
-connection.sync({ force: false }); //remove force: false after initial schema is finalized
+connection.sync({ force: true }); //remove force: false after initial schema is finalized
 
 module.exports = {
   Users,
