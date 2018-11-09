@@ -61,6 +61,12 @@ module.exports = {
       account_id: {
         type: Sequelize.STRING,
         references: { model: "accounts", key: "account_id" }
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
       }
     });
   },
