@@ -5,13 +5,25 @@ var sequelize = new Sequelize("gyfanbase", "katiemcculloch", "", {
 var pbkdf2 = require("pbkdf2");
 // var s = pbkdf2.generateSaltSync(32);
 
+// const {
+//   Users,
+//   Accounts,
+//   ConfigInteractions,
+//   ConfigTargeting,
+//   ConfigRuntime
+// } = require("../database/models.js");
+
 const {
-  Users,
-  Accounts,
-  ConfigInteractions,
+  user,
+  account,
+  ConfigInteraction,
   ConfigTargeting,
   ConfigRuntime
-} = require("../database/models.js");
+} = require("../models/index.js");
+// const { Account } = require("../models");
+// const { ConfigInteraction } = require("../models/configinteraction.js");
+// const { ConfigTargeting } = require("../models/configtargeting.js");
+// const { ConfigRuntime } = require("../models/configruntime.js");
 
 const { Pool } = require("pg");
 const pool = new Pool({
@@ -24,7 +36,7 @@ const pool = new Pool({
 module.exports = {
   user: {
     post: (req, res) => {
-      var user = Users.build({
+      var newUser = user.build({
         uuid: req.body.uuid,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -32,8 +44,8 @@ module.exports = {
         password: req.body.password
       });
       //   console.log(req.body);
-
-      user
+      console.log(newUser);
+      newUser
         .save()
         .then(data => {
           console.log("user data successfully posted");
@@ -46,11 +58,12 @@ module.exports = {
     },
     put: (req, res) => {
       console.log(req.body);
-      Users.count({
-        where: { email: req.body.email, password: req.body.password }
-      })
+      user
+        .count({
+          where: { email: req.body.email, password: req.body.password }
+        })
         .then(data => {
-          Users.increment("logins", { where: { email: req.body.email } });
+          user.increment("logins", { where: { email: req.body.email } });
           console.log("user is verified", data);
           if (data === 1) {
             console.log("count is 1");
@@ -66,22 +79,22 @@ module.exports = {
   },
   account: {
     post: (req, res) => {
-      console.log(req.body[0].email, "katie email");
       user_email = req.body[0].email;
       username = req.body[0].username;
       pool
-        .query(`SELECT uuid FROM users WHERE email='${email}'`)
+        .query(`SELECT uuid FROM users WHERE email='${user_email}'`)
         .then(data => {
           let user_uuid = data["rows"][0]["uuid"];
-          var account = Accounts.build({
+          console.log(user_email, "katie email");
+          var user_account = account.build({
             platform: req.body[0].platform,
             username: req.body[0].username,
             password: req.body[0].password,
             checkpoint_method: req.body[0].checkpoint_method,
-            userUuid: user_uuid,
+            uuid: user_uuid,
             email: user_email
           });
-          account
+          user_account
             .save()
             .then(data => {
               console.log("account data successfully posted");
@@ -89,7 +102,7 @@ module.exports = {
             })
             .catch(err => {
               console.log(err, "there was an error");
-              res.sendStatus(401);
+              res.status(401).send("account could not be verified");
             });
         })
 

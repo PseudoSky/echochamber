@@ -96,7 +96,8 @@ class App extends Component {
         this.setState({ instagramAccounts: accountObject });
       })
       .catch(err => {
-        console.log("account not added", err);
+        window.alert("Account has already been added");
+        console.log("account already added", err);
       });
   }
 

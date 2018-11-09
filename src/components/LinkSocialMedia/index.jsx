@@ -92,15 +92,6 @@ class LinkSocialMedia extends Component {
       checkpoint_method: this.state.selected_checkpoint_method
     });
 
-    axios({ method: "put", url: "/api/user/account", data: addAccountToState })
-      .then(data => {
-        console.log(data, "data");
-      })
-      .catch(err => {
-        console.log("user not verified", err);
-      });
-
-    console.log("addAccountToState", addAccountToState);
     this.props.handleAccountChange(addAccountToState);
   }
 

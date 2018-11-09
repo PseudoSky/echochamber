@@ -1,87 +1,93 @@
 "use strict";
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface, sequelize) => {
     return queryInterface
       .createTable("accounts", {
         account_id: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           unique: true
         },
         platform: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           allowNull: false
         },
         username: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           allowNull: false
         },
         email: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           allowNull: false
         },
         password: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           allowNull: false
         },
         active: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           defaultValue: "pending",
           allowNull: false
         },
         beta: {
-          type: Sequelize.BOOLEAN,
+          type: sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false
         },
         checkpoint_method: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           allowNull: false
         },
         last_start: {
-          type: Sequelize.STRING
+          type: sequelize.STRING
         },
         initial_date: {
-          type: Sequelize.DATE
+          type: sequelize.DATE
         },
         initial_following_count: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_follower_count: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_media_count: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_affinity: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_affinity_mean: {
-          type: Sequelize.FLOAT
+          type: sequelize.FLOAT
         },
         initial_affinity_cardinality: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_affinity_min: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         initial_affinity_max: {
-          type: Sequelize.INTEGER
+          type: sequelize.INTEGER
         },
         config_interaction_version: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           defaultValue: "default"
         },
         config_targeting_version: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           defaultValue: "default"
         },
         config_runtime_version: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           defaultValue: "default"
         },
         uuid: {
-          type: Sequelize.STRING,
+          type: sequelize.STRING,
           references: { model: "users", key: "uuid" }
+        },
+        createdAt: {
+          type: sequelize.DATE
+        },
+        updatedAt: {
+          type: sequelize.DATE
         }
       })
       .then(() => {
@@ -90,7 +96,7 @@ module.exports = {
         );
       });
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface, sequelize) => {
     return queryInterface.dropTable("accounts");
   }
 };
