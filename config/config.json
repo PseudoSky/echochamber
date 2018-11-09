@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "katiemcculloch",
+    "password": null,
+    "database": "gyfanbase",
+    "host": "localhost",
+    "dialect": "postgres",
+    "migrationStorage": "json",
+    "seederStorage": "json"
+  },
+  "test": {
+    "username": "katiemcculloch",
+    "password": null,
+    "database": "gyfanbase",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "katiemcculloch",
+    "password": null,
+    "database": "gyfanbase",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
