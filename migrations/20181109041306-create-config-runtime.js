@@ -2,6 +2,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("config_runtimes", {
+      version: {
+        type: Sequelize.STRING,
+        defaultValue: "default"
+      },
       log_level: {
         type: Sequelize.INTEGER
       },
