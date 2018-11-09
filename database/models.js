@@ -59,13 +59,11 @@ const Accounts = connection.define("accounts", {
   },
   platform: {
     type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
+    allowNull: false
   },
   username: {
     type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
+    allowNull: false
   },
   email: {
     type: Sequelize.STRING,
@@ -428,7 +426,7 @@ ConfigTargeting.belongsTo(Accounts, { through: "account_id" });
 Accounts.belongsToMany(ConfigRuntime, { through: "account_id" });
 ConfigRuntime.belongsTo(Accounts, { primaryKey: "account_id" });
 
-connection.sync({ force: true }); //remove force: false after initial schema is finalized
+connection.sync({ force: false }); //remove force: false after initial schema is finalized
 
 module.exports = {
   Users,

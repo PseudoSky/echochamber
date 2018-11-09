@@ -1,0 +1,7 @@
+[
+  "20181109040526-create-user.js",
+  "20181109040741-create-account.js",
+  "20181109041123-create-config-interaction.js",
+  "20181109041223-create-config-targeting.js",
+  "20181109041306-create-config-runtime.js"
+]
