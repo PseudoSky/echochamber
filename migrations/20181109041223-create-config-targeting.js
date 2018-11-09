@@ -2,6 +2,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("config_targetings", {
+      version: {
+        type: Sequelize.STRING,
+        defaultValue: "default"
+      },
       users: {
         type: Sequelize.TEXT,
         allowNull: false
