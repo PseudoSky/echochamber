@@ -31,6 +31,7 @@ class App extends Component {
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handleAccountChange = this.handleAccountChange.bind(this);
+    this.handleRetrievingAccounts = this.handleRetrievingAccounts.bind(this);
   }
 
   loginButton() {
@@ -56,7 +57,8 @@ class App extends Component {
 
   userVerified() {
     this.setState({ loggedIn: true }, () => {
-      console.log(this.state);
+      console.log(this.state.email, "in user verified");
+      this.handleRetrievingAccounts(this.state.email);
     });
   }
 
@@ -93,11 +95,29 @@ class App extends Component {
       data: accountObject
     })
       .then(data => {
-        this.setState({ instagramAccounts: accountObject });
+        this.setState({
+          instagramAccounts: accountObject,
+          linkedSocialMedia: true
+        });
       })
       .catch(err => {
         window.alert("Account has already been added");
         console.log("account already added", err);
+      });
+  }
+
+  handleRetrievingAccounts(email) {
+    console.log("in retrieving accounts", email);
+    axios({
+      method: "get",
+      url: "/api/user/account",
+      data: email
+    })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err, "could not get accounts");
       });
   }
 
