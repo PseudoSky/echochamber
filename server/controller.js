@@ -16,9 +16,9 @@ var pbkdf2 = require("pbkdf2");
 const {
   user,
   account,
-  ConfigInteraction,
-  ConfigTargeting,
-  ConfigRuntime
+  config_interaction,
+  config_targeting,
+  config_runtime
 } = require("../models/index.js");
 // const { Account } = require("../models");
 // const { ConfigInteraction } = require("../models/configinteraction.js");
@@ -79,8 +79,8 @@ module.exports = {
   },
   account: {
     post: (req, res) => {
-      user_email = req.body[0].email;
-      username = req.body[0].username;
+      var user_email = req.body[0].email;
+      var username = req.body[0].username;
       pool
         .query(`SELECT uuid FROM users WHERE email='${user_email}'`)
         .then(data => {
@@ -109,6 +109,17 @@ module.exports = {
         .catch(err => {
           console.log("err", err);
         });
+    },
+    get: (req, res) => {
+      console.log(req.body);
+      // var account_email = req.body[0].email;
+
+      // pool
+      //   .query(`SELECT * FROM accounts WHERE email='${account_email}'`)
+      //   .then(data => {
+      //     res.status(200).send(data, "success retrieving accounts");
+      //   })
+      //   .catch();
     }
   }
 };
