@@ -4,20 +4,33 @@ module.exports = {
     return queryInterface
       .createTable("accounts", {
         account_id: {
+          type: sequelize.INTEGER,
+          unique: true,
+          autoIncrement: true,
+          primaryKey: true
+        },
+        user_id: {
+          type: sequelize.INTEGER,
+          allowNull: false
+        },
+        instagram_account_id: {
           type: sequelize.STRING,
-          unique: true
+          allowNull: true
         },
         platform: {
           type: sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          primaryKey: true
         },
         username: {
           type: sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          primaryKey: true
         },
         email: {
           type: sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          primaryKey: true
         },
         password: {
           type: sequelize.STRING,
@@ -67,21 +80,17 @@ module.exports = {
         initial_affinity_max: {
           type: sequelize.INTEGER
         },
-        config_interaction_version: {
+        config_interaction_id: {
           type: sequelize.STRING,
           defaultValue: "default"
         },
-        config_targeting_version: {
+        config_targeting_id: {
           type: sequelize.STRING,
           defaultValue: "default"
         },
-        config_runtime_version: {
+        config_runtime_id: {
           type: sequelize.STRING,
           defaultValue: "default"
-        },
-        uuid: {
-          type: sequelize.STRING,
-          references: { model: "users", key: "uuid" }
         },
         createdAt: {
           type: sequelize.DATE
@@ -91,9 +100,10 @@ module.exports = {
         }
       })
       .then(() => {
-        queryInterface.sequelize.query(
-          "alter table accounts add primary key(email, username, platform)"
-        );
+        queryInterface.addConstraint("accounts", ["user_id"], {
+          type: "foreign key",
+          references: { table: "users", field: "user_id" }
+        });
       });
   },
   down: (queryInterface, sequelize) => {

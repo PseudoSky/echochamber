@@ -6,7 +6,6 @@ module.exports = {
       "users",
       [
         {
-          uuid: "0",
           firstName: "John",
           lastName: "Doe",
           password: "password",

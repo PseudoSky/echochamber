@@ -95,10 +95,15 @@ class App extends Component {
       data: accountObject
     })
       .then(data => {
-        this.setState({
-          instagramAccounts: accountObject,
-          linkedSocialMedia: true
-        });
+        this.setState(
+          {
+            instagramAccounts: accountObject,
+            linkedSocialMedia: true
+          },
+          () => {
+            console.log(this.state);
+          }
+        );
       })
       .catch(err => {
         window.alert("Account has already been added");

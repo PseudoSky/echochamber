@@ -4,8 +4,14 @@ module.exports = (sequelize, Sequelize, queryInterface) => {
     "account",
     {
       account_id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        autoIncrement: true,
+        primaryKey: true
+      },
+      instagram_account_id: {
         type: Sequelize.STRING,
-        unique: true
+        allowNull: true
       },
       platform: {
         type: Sequelize.STRING,
@@ -70,21 +76,17 @@ module.exports = (sequelize, Sequelize, queryInterface) => {
       initial_affinity_max: {
         type: Sequelize.INTEGER
       },
-      config_interaction_version: {
+      config_interaction_id: {
         type: Sequelize.STRING,
         defaultValue: "default"
       },
-      config_targeting_version: {
+      config_targeting_id: {
         type: Sequelize.STRING,
         defaultValue: "default"
       },
-      config_runtime_version: {
+      config_runtime_id: {
         type: Sequelize.STRING,
         defaultValue: "default"
-      },
-      uuid: {
-        type: Sequelize.STRING,
-        references: { model: "users", key: "uuid" }
       }
     },
     { timestamps: true }
@@ -92,7 +94,8 @@ module.exports = (sequelize, Sequelize, queryInterface) => {
   Account.associate = function(models) {
     // associations can be defined here
     models.account.belongsTo(models.user, {
-      through: "uuid"
+      through: models.user,
+      foreignKey: "user_id"
     });
     models.account.belongsToMany(models.config_interaction, {
       through: "account_id"
@@ -104,6 +107,6 @@ module.exports = (sequelize, Sequelize, queryInterface) => {
       through: "account_id"
     });
   };
-  Account.removeAttribute("id");
+  // Account.removeAttribute("id");
   return Account;
 };

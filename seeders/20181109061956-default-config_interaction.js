@@ -12,6 +12,7 @@ module.exports = {
         "config_interactions",
         [
           {
+            account_id: 2,
             version: "default",
             cut_point_follow_max: 7500,
             cut_point_follow_min: 1000,
@@ -184,8 +185,7 @@ module.exports = {
             min_media_follow: 5,
             min_affinity: 0,
             start_date: null,
-            end_date: null,
-            account_id: "0"
+            end_date: null
           }
         ],
         {}

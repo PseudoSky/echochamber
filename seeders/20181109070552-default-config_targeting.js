@@ -6,6 +6,7 @@ module.exports = {
       "config_targetings",
       [
         {
+          account_id: 2,
           users: [""],
           locations: [""],
           gender: 0.5,
@@ -18,8 +19,7 @@ module.exports = {
           pool_targets: false,
           pool_name: "*",
           pool_to_discover_ratio: 2,
-          target_class: 0,
-          account_id: "0"
+          target_class: 0
         }
       ],
       {}

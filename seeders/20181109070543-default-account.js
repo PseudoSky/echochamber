@@ -6,15 +6,14 @@ module.exports = {
       "accounts",
       [
         {
-          account_id: "0",
+          user_id: 1,
           platform: "instagram",
           username: "testusername",
           email: "demo@demo.com",
           password: "testpassword",
           active: "pending",
           beta: false,
-          checkpoint_method: "email",
-          uuid: "0"
+          checkpoint_method: "email"
         }
       ],
       {}

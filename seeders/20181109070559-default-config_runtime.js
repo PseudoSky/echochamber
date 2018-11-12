@@ -6,6 +6,7 @@ module.exports = {
       "config_runtimes",
       [
         {
+          account_id: 2,
           log_level: 10,
           log_mod: 1,
           proxy: true,

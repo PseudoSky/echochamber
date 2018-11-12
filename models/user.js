@@ -3,11 +3,12 @@ module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define(
     "user",
     {
-      uuid: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
       firstName: {
         type: Sequelize.STRING,
@@ -37,7 +38,7 @@ module.exports = (sequelize, Sequelize) => {
   User.associate = function(models) {
     // associations can be defined here
     models.user.belongsToMany(models.account, {
-      through: "uuid"
+      through: "user_id"
     });
   };
   return User;
