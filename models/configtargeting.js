@@ -3,6 +3,13 @@ module.exports = (sequelize, Sequelize) => {
   const ConfigTargeting = sequelize.define(
     "config_targeting",
     {
+      config_targeting_id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+      },
       version: {
         type: Sequelize.STRING,
         defaultValue: "default"
@@ -58,17 +65,14 @@ module.exports = (sequelize, Sequelize) => {
       target_class: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      account_id: {
-        type: Sequelize.STRING,
-        references: { model: "accounts", key: "account_id" }
       }
     },
     { timestamps: true }
   );
   ConfigTargeting.associate = function(models) {
-    models.config_interaction.belongsTo(models.account, {
-      through: "account_id"
+    models.config_targeting.belongsTo(models.account, {
+      through: models.config_targeting,
+      foreignKey: "account_id"
     });
   };
   return ConfigTargeting;

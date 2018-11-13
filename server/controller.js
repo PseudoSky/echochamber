@@ -82,16 +82,15 @@ module.exports = {
       var user_email = req.body[0].email;
       var username = req.body[0].username;
       pool
-        .query(`SELECT uuid FROM users WHERE email='${user_email}'`)
+        .query(`SELECT user_id FROM users WHERE email='${user_email}'`)
         .then(data => {
-          let user_uuid = data["rows"][0]["uuid"];
+          let user_uuid = data["rows"][0]["user_id"];
           console.log(user_email, "katie email");
           var user_account = account.build({
             platform: req.body[0].platform,
             username: req.body[0].username,
             password: req.body[0].password,
             checkpoint_method: req.body[0].checkpoint_method,
-            uuid: user_uuid,
             email: user_email
           });
           user_account
@@ -120,6 +119,9 @@ module.exports = {
       //     res.status(200).send(data, "success retrieving accounts");
       //   })
       //   .catch();
+    },
+    put: (req, res) => {
+      
     }
   }
 };

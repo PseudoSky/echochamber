@@ -3,6 +3,13 @@ module.exports = (sequelize, Sequelize) => {
   const ConfigRuntime = sequelize.define(
     "config_runtime",
     {
+      config_runtime_id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+      },
       version: {
         type: Sequelize.STRING,
         defaultValue: "default"
@@ -85,17 +92,14 @@ module.exports = (sequelize, Sequelize) => {
       backoff_inspect: {
         type: Sequelize.INTEGER,
         defaultValue: 1
-      },
-      account_id: {
-        type: Sequelize.STRING,
-        references: { model: "accounts", key: "account_id" }
       }
     },
     { timestamps: true }
   );
   ConfigRuntime.associate = function(models) {
-    models.config_interaction.belongsTo(models.account, {
-      through: "account_id"
+    models.config_runtime.belongsTo(models.account, {
+      through: models.config_runtime,
+      foreignKey: "account_id"
     });
   };
   return ConfigRuntime;

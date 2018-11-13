@@ -3,9 +3,15 @@ module.exports = (sequelize, Sequelize) => {
   const ConfigInteraction = sequelize.define(
     "config_interaction",
     {
-      version: {
-        type: Sequelize.STRING,
+      config_interaction_id: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        autoIncrement: true,
         primaryKey: true
+      },
+      version: {
+        type: Sequelize.STRING
       },
       cut_point_follow_max: {
         type: Sequelize.INTEGER,
@@ -97,10 +103,6 @@ module.exports = (sequelize, Sequelize) => {
       end_date: {
         type: Sequelize.DATE,
         allowNull: true
-      },
-      account_id: {
-        type: Sequelize.STRING,
-        references: { model: "accounts", key: "account_id" }
       }
     },
     {
@@ -109,7 +111,8 @@ module.exports = (sequelize, Sequelize) => {
   );
   ConfigInteraction.associate = function(models) {
     models.config_interaction.belongsTo(models.account, {
-      through: "account_id"
+      through: models.config_interaction,
+      foreignKey: "account_id"
     });
   };
   return ConfigInteraction;
